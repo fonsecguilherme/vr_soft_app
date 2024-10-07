@@ -2,19 +2,40 @@ import 'package:app/presentation/course/course_page.dart';
 import 'package:app/presentation/enroll/enroll_page.dart';
 import 'package:app/presentation/students/students_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomePage extends StatelessWidget {
+import '../../data/repositories/course_repository.dart';
+import '../course/cubit/course_cubit.dart';
+
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final options = ['Alunos', 'Cursos', 'Matrícula'];
-    final icons = [Icons.person, Icons.school_outlined, Icons.menu_book];
-    final pages = [
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  CourseRepository get repository => context.read<CourseRepository>();
+
+  final options = ['Alunos', 'Cursos', 'Matrícula'];
+  final icons = [Icons.person, Icons.school_outlined, Icons.menu_book];
+  late List<Widget> pages;
+
+  @override
+  void initState() {
+    super.initState();
+    pages = [
       const StudentsPage(),
-      const CoursePage(),
+      BlocProvider(
+        create: (context) => CourseCubit(repository: repository),
+        child: const CoursePage(),
+      ),
       const EnrollPage()
     ];
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
