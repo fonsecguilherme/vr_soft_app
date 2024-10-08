@@ -1,20 +1,20 @@
 import 'dart:convert';
 
-class Strudent {
+class Student {
   final int id;
   final String name;
 
-  Strudent({
+  Student({
     required this.id,
     required this.name,
   });
 
-  factory Strudent.fromRawJson(String str) =>
-      Strudent.fromJson(json.decode(str));
+  factory Student.fromRawJson(String str) =>
+      Student.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory Strudent.fromJson(Map<String, dynamic> json) => Strudent(
+  factory Student.fromJson(Map<String, dynamic> json) => Student(
         id: json["codigo"],
         name: json["nome"],
       );
