@@ -1,7 +1,6 @@
-import 'package:app/presentation/actions/cubit/action_cubit.dart';
-import 'package:app/presentation/widgets/delete_widget.dart';
-import 'package:app/presentation/widgets/edit_widget.dart';
-import 'package:app/presentation/widgets/save_widget.dart';
+import 'package:app/presentation/course/widgets/delete_course_widget.dart';
+import 'package:app/presentation/course/widgets/edit_course_widget.dart';
+import 'package:app/presentation/course/widgets/save_course_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,120 +34,123 @@ class _CoursePageState extends State<CoursePage> {
           'Curso',
         ),
       ),
-      body: BlocBuilder<CourseCubit, CourseState>(
-        builder: (context, state) {
-          switch (state) {
-            case InitialCourse():
-              return const Center(child: SizedBox.shrink());
-            case LoadingCourse():
-              return const Center(child: CircularProgressIndicator());
-            case SuccessCourse():
-              return Column(
-                children: [
-                  Flexible(
-                    flex: 10,
-                    child: ListView.builder(
-                      itemCount: state.courses.length,
-                      itemBuilder: (context, index) {
-                        final course = state.courses.elementAt(index);
+      body: Column(
+        children: [
+          Flexible(
+            flex: 10,
+            child: BlocBuilder<CourseCubit, CourseState>(
+              builder: (context, state) {
+                switch (state) {
+                  case InitialCourse():
+                    return const Center(child: Text('Nenhum curso criado!'));
+                  case LoadingCourse():
+                    return const Center(child: CircularProgressIndicator());
+                  case SuccessCourse():
+                    return Column(
+                      children: [
+                        Flexible(
+                          flex: 10,
+                          child: ListView.builder(
+                            itemCount: state.courses.length,
+                            itemBuilder: (context, index) {
+                              final course = state.courses.elementAt(index);
 
-                        return ExpansionTile(
-                          title: Text(course.description),
-                          leading: Text('${course.id} - '),
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ListTile(
-                                  title: Text(
-                                    'Ementa: ${course.courseSyllabus}',
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
+                              return ExpansionTile(
+                                title: Text(course.description),
+                                leading: Text('${course.id} - '),
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      ListTile(
+                                        title: Text(
+                                          'Ementa: ${course.courseSyllabus}',
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+                  case ErrorCourse():
+                    return Center(child: Text(state.errorMessage));
+                  default:
+                    return const SizedBox.shrink();
+                }
+              },
+            ),
+          ),
+          Flexible(
+            flex: 1,
+            child: Container(
+              color: Colors.grey.shade300,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Center(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => BlocProvider.value(
+                              value: cubit,
+                              child: const DeleteCourseWidget(
+                                title: 'Excluir Curso',
+                              ),
+                            ),
+                          ),
                         );
                       },
+                      child: const Text('Excluir'),
                     ),
                   ),
-                  Flexible(
-                      flex: 1,
-                      child: Container(
-                        color: Colors.grey.shade300,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Center(
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => BlocProvider(
-                                        create: (context) => ActionCubit(
-                                          repository: repository,
-                                        ),
-                                        child: const DeleteWidget(
-                                          title: 'Excluir Curso',
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                                child: const Text('Excluir'),
+                  const VerticalDivider(),
+                  Center(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => BlocProvider.value(
+                              value: cubit,
+                              child: const SaveCourseWidget(
+                                title: 'Cadastre seu Curso',
                               ),
                             ),
-                            const VerticalDivider(),
-                            Center(
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => BlocProvider(
-                                        create: (context) => ActionCubit(
-                                          repository: repository,
-                                        ),
-                                        child: const SaveWidget(
-                                          title: 'Cadastre seu Curso',
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                                child: const Text('Cadastrar'),
+                          ),
+                        );
+                      },
+                      child: const Text('Cadastrar'),
+                    ),
+                  ),
+                  const VerticalDivider(),
+                  Center(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => BlocProvider.value(
+                              value: cubit,
+                              child: const EditCourseWidget(
+                                title: 'Editar Curso',
                               ),
                             ),
-                            const VerticalDivider(),
-                            Center(
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => BlocProvider(
-                                        create: (context) => ActionCubit(
-                                          repository: repository,
-                                        ),
-                                        child: const EditWidget(
-                                          title: 'Editar Curso',
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                                child: const Text('Editar'),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ))
+                          ),
+                        );
+                      },
+                      child: const Text('Editar'),
+                    ),
+                  ),
                 ],
-              );
-            case ErrorCourse():
-              return Center(child: Text(state.errorMessage));
-            default:
-              return const SizedBox.shrink();
-          }
-        },
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

@@ -17,3 +17,9 @@ final class ErrorCourse extends CourseState {
 
   ErrorCourse({required this.errorMessage});
 }
+
+final class ActionCourseSuccessState extends CourseState {
+  final String message;
+
+  ActionCourseSuccessState({required this.message});
+}

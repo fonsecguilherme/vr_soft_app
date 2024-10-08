@@ -1,22 +1,23 @@
-import 'package:app/presentation/actions/cubit/action_cubit.dart';
+import 'package:app/presentation/course/cubit/course_cubit.dart';
 import 'package:app/utils/messages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../actions/cubit/action_state.dart';
+import '../cubit/course_state.dart';
 
-class DeleteWidget extends StatefulWidget {
-  const DeleteWidget({super.key, required this.title});
+class SaveCourseWidget extends StatefulWidget {
+  const SaveCourseWidget({super.key, required this.title});
 
   final String title;
 
   @override
-  State<DeleteWidget> createState() => _DeleteWidgetState();
+  State<SaveCourseWidget> createState() => _SaveCourseWidgetState();
 }
 
-class _DeleteWidgetState extends State<DeleteWidget> {
-  TextEditingController idController = TextEditingController();
-  ActionCubit get cubit => context.read<ActionCubit>();
+class _SaveCourseWidgetState extends State<SaveCourseWidget> {
+  TextEditingController descriptionController = TextEditingController();
+  TextEditingController syllabusController = TextEditingController();
+  CourseCubit get cubit => context.read<CourseCubit>();
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +25,13 @@ class _DeleteWidgetState extends State<DeleteWidget> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: BlocListener<ActionCubit, ActionState>(
+      body: BlocListener<CourseCubit, CourseState>(
         listener: (context, state) {
-          if (state is ErrorActionState) {
+          if (state is ErrorCourse) {
             Messages.of(context).showError(state.errorMessage);
-          } else if (state is SuccessActionState) {
-            Messages.of(context).showSuccess('Excluído com sucesso!');
+          } else if (state is ActionCourseSuccessState) {
+            cubit.getCourses();
+            Messages.of(context).showSuccess('Criado com sucesso!');
             Navigator.pop(context);
           }
         },
@@ -40,15 +42,25 @@ class _DeleteWidgetState extends State<DeleteWidget> {
               padding:
                   const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
               child: _CustomTextField(
-                controller: idController,
-                hintText: 'ID a ser excluído',
+                controller: descriptionController,
+                hintText: 'Descrição',
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: _CustomTextField(
+                controller: syllabusController,
+                hintText: 'Ementa',
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 16.0),
               child: ElevatedButton(
-                onPressed: () => cubit.deleteAction(id: idController.text),
-                child: const Text('Apagar!'),
+                onPressed: () => cubit.createCourse(
+                  description: descriptionController.text,
+                  syllabus: syllabusController.text,
+                ),
+                child: const Text('Criar!'),
               ),
             )
           ],
@@ -72,7 +84,6 @@ class _CustomTextField extends StatelessWidget {
     return TextField(
       controller: controller,
       onEditingComplete: () {},
-      keyboardType: TextInputType.number,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.all(16.0),
         enabledBorder: OutlineInputBorder(
