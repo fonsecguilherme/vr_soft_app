@@ -1,7 +1,9 @@
 import 'package:app/data/repositories/enroll_repository.dart';
+import 'package:app/data/repositories/students_repository.dart';
 import 'package:app/presentation/course/course_page.dart';
 import 'package:app/presentation/enroll/cubit/enroll_cubit.dart';
 import 'package:app/presentation/enroll/enroll_page.dart';
+import 'package:app/presentation/students/cubit/students_cubit.dart';
 import 'package:app/presentation/students/students_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,6 +21,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   CourseRepository get repository => context.read<CourseRepository>();
   EnrollRepository get enrollRepository => context.read<EnrollRepository>();
+  StudentsRepository get studentRepository =>
+      context.read<StudentsRepository>();
 
   final options = ['Alunos', 'Cursos', 'Matrícula'];
   final icons = [Icons.person, Icons.school_outlined, Icons.menu_book];
@@ -27,8 +31,11 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    pages = [
-      const StudentsPage(),
+    pages = <Widget>[
+      BlocProvider(
+        create: (context) => StudentsCubit(repository: studentRepository),
+        child: const StudentsPage(),
+      ),
       BlocProvider(
         create: (context) => CourseCubit(repository: repository),
         child: const CoursePage(),
