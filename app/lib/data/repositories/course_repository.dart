@@ -39,7 +39,7 @@ class CourseRepository implements ICourseRepository {
   }
 
   @override
-  Future<bool> save({
+  Future<ApiResponse<String?>> save({
     required String description,
     required String courseSyllabus,
   }) async {
@@ -61,38 +61,48 @@ class CourseRepository implements ICourseRepository {
       );
 
       if (response.statusCode == 201) {
-        return true;
+        return (data: 'Curso criado com sucesso.', error: Empty());
       } else {
-        return false;
+        return (data: null, error: Failure(message: 'Erro ao criar o curso.'));
       }
     } catch (e) {
-      return false;
+      return (
+        data: null,
+        error: Failure(message: 'Erro ao tentar se conectar com o servidor.')
+      );
     }
   }
 
   @override
-  Future<String> delete(int id) async {
+  Future<ApiResponse<String?>> delete(int id) async {
     final url = '$_baseUrl/delete_by_id?id=$id';
 
     try {
       final response = await client.delete(url);
 
       if (response.statusCode == 200) {
-        return response.body;
+        return (data: response.body, error: Empty());
       } else if (response.statusCode == 404) {
-        return response.body;
+        return (data: null, error: Failure(message: response.body));
       } else if (response.statusCode == 409) {
-        return response.body;
+        return (data: null, error: Failure(message: response.body));
       } else {
-        return 'Erro desconhecido ao tentar excluir o curso.';
+        return (
+          data: null,
+          error:
+              Failure(message: 'Erro desconhecido ao tentar excluir o curso.')
+        );
       }
     } catch (e) {
-      return 'Erro ao tentar se conectar com o servidor.';
+      return (
+        data: null,
+        error: Failure(message: 'Erro ao tentar se conectar com o servidor.')
+      );
     }
   }
 
   @override
-  Future<String> update({
+  Future<ApiResponse<String?>> update({
     required int id,
     required String description,
     required String courseSyllabus,
@@ -115,14 +125,20 @@ class CourseRepository implements ICourseRepository {
       );
 
       if (response.statusCode == 200) {
-        return 'Editado com sucesso.';
+        return (data: 'Editado com sucesso.', error: Empty());
       } else if (response.statusCode == 404) {
-        return response.body;
+        return (data: null, error: Failure(message: response.body));
       } else {
-        return 'Erro desconhecido ao tentar vincular aluno.';
+        return (
+          data: null,
+          error: Failure(message: 'Erro desconhecido ao tentar vincular aluno.')
+        );
       }
     } catch (e) {
-      return 'Erro ao tentar se conectar com o servidor.';
+      return (
+        data: null,
+        error: Failure(message: 'Erro ao tentar se conectar com o servidor.')
+      );
     }
   }
 }

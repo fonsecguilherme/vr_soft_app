@@ -4,16 +4,16 @@ typedef ApiResponse<T> = ({T? data, Error error});
 
 abstract class ICourseRepository {
   Future<ApiResponse<List<Course>?>> getAll();
-  Future<void> save({
+  Future<ApiResponse<String?>> save({
     required String description,
     required String courseSyllabus,
   });
-  Future<void> update({
+  Future<ApiResponse<String?>> update({
     required int id,
     required String description,
     required String courseSyllabus,
   });
-  Future<void> delete(int id);
+  Future<ApiResponse<String?>> delete(int id);
 }
 
 abstract interface class Error {}
