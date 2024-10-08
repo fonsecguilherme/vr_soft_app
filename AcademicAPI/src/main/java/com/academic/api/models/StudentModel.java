@@ -1,5 +1,6 @@
 package com.academic.api.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,5 +20,6 @@ public class StudentModel {
     private String nome;
 
     @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<CourseStudentModel> cursos;
 }

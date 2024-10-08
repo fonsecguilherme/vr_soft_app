@@ -19,11 +19,12 @@ public class CourseModel {
     @Column(nullable = false, length = 50)
     private String descricao;
 
-    @Lob
+    @Column(nullable = false)
+    @JsonBackReference
     private String ementa;
 
-    //    @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL)
-    @OneToMany(mappedBy = "curso")
+    @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL)
+//    @OneToMany(mappedBy = "curso")
     @JsonBackReference
     private List<CourseStudentModel> alunos;
 }

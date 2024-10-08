@@ -16,9 +16,10 @@ class Student {
   factory Student.fromJson(Map<String, dynamic> json) => Student(
         id: json["codigo"],
         name: json["nome"],
-        courses: List<Course>.from(
-          json["cursos"].map((x) => Course.fromJson(x as Map<String, dynamic>)),
-        ),
+        courses: json["cursos"] != null
+            ? List<Course>.from(json["cursos"]
+                .map((x) => Course.fromJson(x as Map<String, dynamic>)))
+            : [],
       );
 
   Map<String, dynamic> toJson() => {

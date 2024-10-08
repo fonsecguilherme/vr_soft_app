@@ -49,11 +49,11 @@ class _StudentsPageState extends State<StudentsPage> {
                             child: ListView.builder(
                               itemCount: state.students.length,
                               itemBuilder: (context, index) {
-                                final course = state.students.elementAt(index);
+                                final student = state.students.elementAt(index);
 
                                 return ListTile(
-                                  title: Text(course.name),
-                                  leading: Text('${course.id} - '),
+                                  title: Text(student.name),
+                                  leading: Text('${student.id} - '),
                                 );
                               },
                             ),
