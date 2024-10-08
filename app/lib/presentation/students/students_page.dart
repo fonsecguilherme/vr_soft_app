@@ -27,7 +27,7 @@ class _StudentsPageState extends State<StudentsPage> {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: const Text(
-            'Estudantes',
+            'Alunos',
           ),
         ),
         body: Column(

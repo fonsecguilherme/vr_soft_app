@@ -42,7 +42,7 @@ class StudentsCubit extends Cubit<StudentsState> {
         return;
       }
 
-      emit(ActionSuccessState(message: result!));
+      emit(ActionStudentSuccessState(message: result!));
       getStudents();
     } catch (e) {
       emit(ErrorStudents(errorMessage: '$e'));
@@ -70,8 +70,8 @@ class StudentsCubit extends Cubit<StudentsState> {
         return;
       }
 
-      emit(ActionSuccessState(message: result!));
-      getStudents();
+      emit(ActionStudentSuccessState(message: result!));
+      // getStudents();
     } catch (e) {
       emit(ErrorStudents(errorMessage: '$e'));
     }
@@ -99,7 +99,7 @@ class StudentsCubit extends Cubit<StudentsState> {
         return;
       }
 
-      emit(ActionSuccessState(message: result!));
+      emit(ActionStudentSuccessState(message: result!));
       getStudents();
     } catch (e) {
       emit(ErrorStudents(errorMessage: '$e'));

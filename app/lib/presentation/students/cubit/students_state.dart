@@ -18,11 +18,8 @@ final class ErrorStudents extends StudentsState {
   ErrorStudents({required this.errorMessage});
 }
 
-final class ActionSuccessState extends StudentsState{ 
-
+final class ActionStudentSuccessState extends StudentsState {
   final String message;
 
-  ActionSuccessState({required this.message});
-
-
+  ActionStudentSuccessState({required this.message});
 }

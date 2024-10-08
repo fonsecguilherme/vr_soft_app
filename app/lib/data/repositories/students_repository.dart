@@ -27,7 +27,7 @@ class StudentsRepository implements IStudentRepository {
       if (response.statusCode == 200) {
         final body = jsonDecode(response.body);
 
-        final List<Student> students = body
+        final List<Student> students = (body as List)
             .map((e) => Student.fromJson(e as Map<String, dynamic>))
             .toList();
 
@@ -135,10 +135,17 @@ class StudentsRepository implements IStudentRepository {
       } else if (response.statusCode == 404) {
         return (data: null, error: Failure(message: response.body));
       } else {
-        return (data: null, error: Failure(message: 'Erro desconhecido ao tentar vincular aluno.'));
+        return (
+          data: null,
+          error:
+              Failure(message: 'Erro desconhecido ao tentar atualizar aluno.')
+        );
       }
     } catch (e) {
-      return (data: null, error: Failure(message: 'Erro ao tentar se conectar com o servidor.'));
+      return (
+        data: null,
+        error: Failure(message: 'Erro ao tentar se conectar com o servidor.')
+      );
     }
   }
 }
