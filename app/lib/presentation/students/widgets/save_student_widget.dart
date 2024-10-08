@@ -29,7 +29,7 @@ class _SaveStudentWidgetState extends State<SaveStudentWidget> {
         listener: (context, state) {
           if (state is ErrorStudents) {
             Messages.of(context).showError(state.errorMessage);
-          } else if (state is ActionSuccessState) {
+          } else if (state is ActionStudentSuccessState) {
             Messages.of(context).showSuccess(state.message);
             Navigator.pop(context);
           }

@@ -33,7 +33,6 @@ class App extends StatelessWidget {
             client: RepositoryProvider.of<IHttpClient>(context),
           ),
         ),
-
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
