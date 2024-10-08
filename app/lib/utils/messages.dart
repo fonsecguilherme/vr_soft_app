@@ -11,8 +11,10 @@ class Messages {
   void showError(String message) =>
       _showMessage(message, context.colorScheme.error);
 
-  void showSuccess(String message) =>
-      _showMessage(message, context.colorScheme.primaryFixed);
+  void showSuccess(String message) => _showMessage(
+        message,
+        Colors.green,
+      );
 
   void _showMessage(String message, Color color) {
     var scaffoldMessenger = ScaffoldMessenger.of(context);

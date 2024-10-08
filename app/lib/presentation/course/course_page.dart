@@ -1,4 +1,6 @@
 import 'package:app/presentation/actions/cubit/action_cubit.dart';
+import 'package:app/presentation/widgets/delete_widget.dart';
+import 'package:app/presentation/widgets/edit_widget.dart';
 import 'package:app/presentation/widgets/save_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,7 +39,7 @@ class _CoursePageState extends State<CoursePage> {
         builder: (context, state) {
           switch (state) {
             case InitialCourse():
-              return const Center(child: Text('initical'));
+              return const Center(child: SizedBox.shrink());
             case LoadingCourse():
               return const Center(child: CircularProgressIndicator());
             case SuccessCourse():
@@ -80,24 +82,19 @@ class _CoursePageState extends State<CoursePage> {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => BlocProvider(
-                                      create: (context) => ActionCubit(
-                                        repository: repository,
-                                      ),
-                                      child: const SaveWidget(
-                                        title: 'Cadastre seu Curso',
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => BlocProvider(
+                                        create: (context) => ActionCubit(
+                                          repository: repository,
+                                        ),
+                                        child: const DeleteWidget(
+                                          title: 'Excluir Curso',
+                                        ),
                                       ),
                                     ),
-                                  ));
+                                  );
                                 },
-                                child: const Text('Cadastrar'),
-                              ),
-                            ),
-                            const VerticalDivider(),
-                            Center(
-                              child: InkWell(
-                                onTap: () {},
                                 child: const Text('Excluir'),
                               ),
                             ),
@@ -105,7 +102,38 @@ class _CoursePageState extends State<CoursePage> {
                             Center(
                               child: InkWell(
                                 onTap: () {
-                                  print('Editar');
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => BlocProvider(
+                                        create: (context) => ActionCubit(
+                                          repository: repository,
+                                        ),
+                                        child: const SaveWidget(
+                                          title: 'Cadastre seu Curso',
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: const Text('Cadastrar'),
+                              ),
+                            ),
+                            const VerticalDivider(),
+                            Center(
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => BlocProvider(
+                                        create: (context) => ActionCubit(
+                                          repository: repository,
+                                        ),
+                                        child: const EditWidget(
+                                          title: 'Editar Curso',
+                                        ),
+                                      ),
+                                    ),
+                                  );
                                 },
                                 child: const Text('Editar'),
                               ),

@@ -24,5 +24,4 @@ class StudentsRepository implements IStudentRepository {
     // TODO: implement update
     throw UnimplementedError();
   }
-  
 }

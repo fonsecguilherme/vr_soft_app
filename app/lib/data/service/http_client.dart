@@ -70,7 +70,7 @@ class HttpClient implements IHttpClient {
 
   @override
   Future<HttpResponse> put(String url,
-      {Map<String, String>? headers, Object? body})async {
+      {Map<String, String>? headers, Object? body}) async {
     try {
       final response = await client.put(
         Uri.parse(url),

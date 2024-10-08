@@ -119,7 +119,7 @@ class CourseRepository implements ICourseRepository {
       } else if (response.statusCode == 404) {
         return response.body;
       } else {
-        return 'Erro desconhecido ao tentar editar o curso.';
+        return 'Erro desconhecido ao tentar vincular aluno.';
       }
     } catch (e) {
       return 'Erro ao tentar se conectar com o servidor.';

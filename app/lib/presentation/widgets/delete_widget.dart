@@ -47,9 +47,7 @@ class _DeleteWidgetState extends State<DeleteWidget> {
             Padding(
               padding: const EdgeInsets.only(top: 16.0),
               child: ElevatedButton(
-                onPressed: () => cubit.deleteAction(
-                id: idController.text
-                ),
+                onPressed: () => cubit.deleteAction(id: idController.text),
                 child: const Text('Apagar!'),
               ),
             )
