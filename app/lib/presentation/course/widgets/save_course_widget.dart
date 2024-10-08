@@ -3,6 +3,7 @@ import 'package:app/utils/messages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../widgets/custom_text_field.dart';
 import '../cubit/course_state.dart';
 
 class SaveCourseWidget extends StatefulWidget {
@@ -41,14 +42,14 @@ class _SaveCourseWidgetState extends State<SaveCourseWidget> {
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
-              child: _CustomTextField(
+              child: CustomTextField(
                 controller: descriptionController,
                 hintText: 'Descrição',
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: _CustomTextField(
+              child: CustomTextField(
                 controller: syllabusController,
                 hintText: 'Ementa',
               ),
@@ -65,44 +66,6 @@ class _SaveCourseWidgetState extends State<SaveCourseWidget> {
             )
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _CustomTextField extends StatelessWidget {
-  const _CustomTextField({
-    required this.controller,
-    required this.hintText,
-  });
-
-  final TextEditingController controller;
-  final String hintText;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      onEditingComplete: () {},
-      decoration: InputDecoration(
-        contentPadding: const EdgeInsets.all(16.0),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30),
-          borderSide: BorderSide(
-            color: Theme.of(context).colorScheme.outline,
-            width: 2.0,
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30),
-          borderSide: BorderSide(
-            color: Theme.of(context).colorScheme.outline,
-            width: 2.0,
-          ),
-        ),
-        filled: true,
-        hintStyle: const TextStyle(color: Colors.grey),
-        hintText: hintText,
       ),
     );
   }

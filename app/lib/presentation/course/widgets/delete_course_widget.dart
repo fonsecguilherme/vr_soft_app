@@ -4,6 +4,8 @@ import 'package:app/utils/messages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../widgets/custom_text_field.dart';
+
 class DeleteCourseWidget extends StatefulWidget {
   const DeleteCourseWidget({super.key, required this.title});
 
@@ -42,7 +44,7 @@ class _DeleteCourseWidgetState extends State<DeleteCourseWidget> {
               Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 24.0, vertical: 16.0),
-                child: _CustomTextField(
+                child: CustomTextField(
                   controller: idController,
                   hintText: 'ID a ser excluído',
                 ),
@@ -57,45 +59,6 @@ class _DeleteCourseWidgetState extends State<DeleteCourseWidget> {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _CustomTextField extends StatelessWidget {
-  const _CustomTextField({
-    required this.controller,
-    required this.hintText,
-  });
-
-  final TextEditingController controller;
-  final String hintText;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      onEditingComplete: () {},
-      keyboardType: TextInputType.number,
-      decoration: InputDecoration(
-        contentPadding: const EdgeInsets.all(16.0),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30),
-          borderSide: BorderSide(
-            color: Theme.of(context).colorScheme.outline,
-            width: 2.0,
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30),
-          borderSide: BorderSide(
-            color: Theme.of(context).colorScheme.outline,
-            width: 2.0,
-          ),
-        ),
-        filled: true,
-        hintStyle: const TextStyle(color: Colors.grey),
-        hintText: hintText,
       ),
     );
   }
