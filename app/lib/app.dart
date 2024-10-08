@@ -1,4 +1,5 @@
 import 'package:app/data/repositories/course_repository.dart';
+import 'package:app/data/repositories/enroll_repository.dart';
 import 'package:app/data/service/http_client.dart';
 import 'package:app/domain/service/i_http_client.dart';
 import 'package:app/presentation/home/home_page.dart';
@@ -18,6 +19,11 @@ class App extends StatelessWidget {
         ),
         RepositoryProvider(
           create: (context) => CourseRepository(
+            client: RepositoryProvider.of<IHttpClient>(context),
+          ),
+        ),
+        RepositoryProvider(
+          create: (context) => EnrollRepository(
             client: RepositoryProvider.of<IHttpClient>(context),
           ),
         ),
