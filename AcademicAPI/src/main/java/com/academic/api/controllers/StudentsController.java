@@ -23,7 +23,10 @@ public class StudentsController {
 
     @GetMapping("/get_all")
     public ResponseEntity<Object> getAllStudents() {
-        return ResponseEntity.status(HttpStatus.OK).body(repository.findAll());
+
+        var response = repository.findAll();
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping("/save")
