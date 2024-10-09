@@ -10,6 +10,9 @@ import 'widgets/save_student_widget.dart';
 class StudentsPage extends StatefulWidget {
   const StudentsPage({super.key});
 
+  static const studentsInitialKey = Key('studentsInitialKey');
+  static const studentsSuccessKey = Key('studentsSuccessKey');
+
   @override
   State<StudentsPage> createState() => _StudentsPageState();
 }
@@ -38,11 +41,14 @@ class _StudentsPageState extends State<StudentsPage> {
                 builder: (context, state) {
                   switch (state) {
                     case InitialStudents():
-                      return const Center(child: SizedBox.shrink());
+                      return const Center(
+                          key: StudentsPage.studentsInitialKey,
+                          child: SizedBox.shrink());
                     case LoadingStudents():
                       return const Center(child: CircularProgressIndicator());
                     case SuccessStudents():
                       return Column(
+                        key: StudentsPage.studentsSuccessKey,
                         children: [
                           Flexible(
                             flex: 10,

@@ -1,6 +1,11 @@
+import 'package:equatable/equatable.dart';
+
 import '../../../data/models/student.dart';
 
-sealed class StudentsState {}
+sealed class StudentsState extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
 
 final class InitialStudents extends StudentsState {}
 
