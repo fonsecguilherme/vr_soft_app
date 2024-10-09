@@ -20,11 +20,9 @@ public class CourseModel {
     private String descricao;
 
     @Column(nullable = false)
-    @JsonBackReference
     private String ementa;
 
     @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL)
-//    @OneToMany(mappedBy = "curso")
     @JsonBackReference
     private List<CourseStudentModel> alunos;
 }
