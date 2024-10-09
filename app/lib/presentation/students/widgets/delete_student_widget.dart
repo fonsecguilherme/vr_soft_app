@@ -1,5 +1,6 @@
 import 'package:app/presentation/students/cubit/students_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../utils/messages.dart';
@@ -48,6 +49,10 @@ class _DeleteStudentWidgetState extends State<DeleteStudentWidget> {
                 child: CustomTextField(
                   controller: idController,
                   hintText: 'ID',
+                  inputType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
                 ),
               ),
               Padding(
@@ -56,7 +61,7 @@ class _DeleteStudentWidgetState extends State<DeleteStudentWidget> {
                   onPressed: () => cubit.deleteStudent(
                     id: idController.text,
                   ),
-                  child: const Text('Criar!'),
+                  child: const Text('Apagar!'),
                 ),
               )
             ],

@@ -1,5 +1,6 @@
 import 'package:app/utils/messages.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../widgets/custom_text_field.dart';
@@ -48,6 +49,10 @@ class _EditCourseWidgetState extends State<EditCourseWidget> {
                 child: CustomTextField(
                   controller: idController,
                   hintText: 'ID',
+                  inputType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
                 ),
               ),
               Padding(

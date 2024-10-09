@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../utils/messages.dart';
@@ -47,6 +48,10 @@ class _EnrollPageState extends State<EnrollPage> {
               child: CustomTextField(
                 controller: studentIdController,
                 hintText: 'ID aluno',
+                inputType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
               ),
             ),
             Padding(
@@ -54,6 +59,10 @@ class _EnrollPageState extends State<EnrollPage> {
               child: CustomTextField(
                 controller: courseIdController,
                 hintText: 'ID curso',
+                inputType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
               ),
             ),
             Padding(

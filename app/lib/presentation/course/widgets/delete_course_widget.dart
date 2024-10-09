@@ -2,6 +2,7 @@ import 'package:app/presentation/course/cubit/course_cubit.dart';
 import 'package:app/presentation/course/cubit/course_state.dart';
 import 'package:app/utils/messages.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../widgets/custom_text_field.dart';
@@ -47,6 +48,10 @@ class _DeleteCourseWidgetState extends State<DeleteCourseWidget> {
                 child: CustomTextField(
                   controller: idController,
                   hintText: 'ID a ser excluído',
+                  inputType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
                 ),
               ),
               Padding(
