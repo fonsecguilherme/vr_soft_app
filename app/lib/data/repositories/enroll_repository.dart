@@ -1,5 +1,6 @@
 import 'package:app/domain/repositories/i_enroll_repository.dart';
 
+import '../../domain/repositories/i_course_repository.dart';
 import '../../domain/service/i_http_client.dart';
 
 class EnrollRepository implements IEnrollRepository {
@@ -11,7 +12,7 @@ class EnrollRepository implements IEnrollRepository {
   final _baseUrl = 'http://localhost:8080/enroll';
 
   @override
-  Future<String> delete({
+  Future<ApiResponse<String?>> delete({
     required int courseId,
     required int studentId,
   }) async {
@@ -22,19 +23,25 @@ class EnrollRepository implements IEnrollRepository {
       final response = await client.delete(url);
 
       if (response.statusCode == 200) {
-        return 'Aluno excluído do curso com sucesso!';
+        return (data: 'Aluno excluído do curso com sucesso!', error: Empty());
       } else if (response.statusCode == 404) {
-        return response.body;
+        return (data: null, error: Failure(message: response.body));
       } else {
-        return 'Erro desconhecido ao tentar editar o curso.';
+        return (
+          data: null,
+          error: Failure(message: 'Erro desconhecido ao tentar editar o curso.')
+        );
       }
     } catch (e) {
-      return 'Erro ao tentar se conectar com o servidor.';
+      return (
+        data: null,
+        error: Failure(message: 'Erro ao tentar se conectar com o servidor.')
+      );
     }
   }
 
   @override
-  Future<String> save({
+  Future<ApiResponse<String?>> save({
     required int courseId,
     required int studentId,
   }) async {
@@ -45,14 +52,21 @@ class EnrollRepository implements IEnrollRepository {
       final response = await client.post(url);
 
       if (response.statusCode == 200) {
-        return 'Aluno matriculado';
+        return (data: 'Aluno matriculado', error: Empty());
       } else if (response.statusCode == 404) {
-        return response.body;
+        return (data: null, error: Failure(message: response.body));
       } else {
-        return 'Erro desconhecido ao tentar matricular aluno';
+        return (
+          data: null,
+          error:
+              Failure(message: 'Erro desconhecido ao tentar matricular aluno')
+        );
       }
     } catch (e) {
-      return 'Erro ao tentar se conectar com o servidor.';
+      return (
+        data: null,
+        error: Failure(message: 'Erro ao tentar se conectar com o servidor.')
+      );
     }
   }
 }

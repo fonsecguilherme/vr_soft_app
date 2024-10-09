@@ -1,9 +1,11 @@
+import 'i_course_repository.dart';
+
 abstract class IEnrollRepository {
-  Future<String> save({
+  Future<ApiResponse<String?>> save({
     required int courseId,
     required int studentId,
   });
-  Future<String> delete({
+  Future<ApiResponse<String?>> delete({
     required int courseId,
     required int studentId,
   });

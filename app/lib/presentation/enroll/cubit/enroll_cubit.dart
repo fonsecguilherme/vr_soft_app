@@ -1,4 +1,5 @@
 import 'package:app/data/repositories/enroll_repository.dart';
+import 'package:app/domain/repositories/i_course_repository.dart';
 import 'package:bloc/bloc.dart';
 
 import '../enroll_page.dart';
@@ -35,17 +36,21 @@ class EnrollCubit extends Cubit<EnrollState> {
     int parsedCourseId = int.parse(courseId);
     int parsedStudentId = int.parse(studentId);
 
-    final result = await repository.save(
-      courseId: parsedCourseId,
-      studentId: parsedStudentId,
-    );
+    try {
+      final (data: result, error: error) = await repository.save(
+        courseId: parsedCourseId,
+        studentId: parsedStudentId,
+      );
 
-    if (result != 'Aluno matriculado') {
-      emit(ErrorEnrollState(errorMessage: result));
-      return;
+      if (error is Failure) {
+        emit(ErrorEnrollState(errorMessage: error.message));
+        return;
+      }
+
+      emit(SuccessEnrollState(message: result!));
+    } catch (e) {
+      emit(ErrorEnrollState(errorMessage: '$e'));
     }
-
-    emit(SuccessEnrollState(message: result));
   }
 
   Future<void> deleteStudentFromCourse({
@@ -62,16 +67,19 @@ class EnrollCubit extends Cubit<EnrollState> {
     int parsedCourseId = int.parse(courseId);
     int parsedStudentId = int.parse(studentId);
 
-    final result = await repository.delete(
-      courseId: parsedCourseId,
-      studentId: parsedStudentId,
-    );
+    try {
+      final (data: result, error: error) = await repository.delete(
+        courseId: parsedCourseId,
+        studentId: parsedStudentId,
+      );
+      if (error is Failure) {
+        emit(ErrorEnrollState(errorMessage: error.message));
+        return;
+      }
 
-    if (result != 'Aluno excluído do curso com sucesso!') {
-      emit(ErrorEnrollState(errorMessage: result));
-      return;
+      emit(SuccessEnrollState(message: result!));
+    } catch (e) {
+      emit(ErrorEnrollState(errorMessage: '$e'));
     }
-
-    emit(SuccessEnrollState(message: result));
   }
 }
